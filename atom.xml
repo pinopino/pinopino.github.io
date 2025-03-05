@@ -6,7 +6,7 @@
   <link href="https://pinopino.github.io/atom.xml" rel="self"/>
   
   <link href="https://pinopino.github.io/"/>
-  <updated>2025-03-05T12:33:24.864Z</updated>
+  <updated>2025-03-05T12:27:35.757Z</updated>
   <id>https://pinopino.github.io/</id>
   
   <author>
@@ -15,32 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>await-anything-copy</title>
-    <link href="https://pinopino.github.io/2025/03/05/await-anything-copy/"/>
-    <id>https://pinopino.github.io/2025/03/05/await-anything-copy/</id>
-    <published>2025-03-05T12:33:01.000Z</published>
-    <updated>2025-03-05T12:33:24.864Z</updated>
-    
-    <content type="html"><![CDATA[<p>oncurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be accessing the dictionary at the same time without corrupting it. It supports adding through its TryAdd method, conditional updates through its TryUpdate method, non-conditional adds or updates through its indexer’s setter, and removals through its TryRemove method, through which a key&#x2F;value pair is removed if the user-provided key matches.  It also has several compound methods, such as GetOrAdd and AddOrUpdate. Lately, however, we’ve seen several folks ask for further support on ConcurrentDictionary, that of removing a key&#x2F;value pair only if both the user-provided key and value match the corresponding pair currently stored in the dictionary. </p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;oncurrentDictionary&amp;lt;TKey,TValue&amp;gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe re</summary>
-      
-    
-    
-    
-    
-    <category term="a" scheme="https://pinopino.github.io/tags/a/"/>
-    
-    <category term="b" scheme="https://pinopino.github.io/tags/b/"/>
-    
-    <category term="c" scheme="https://pinopino.github.io/tags/c/"/>
-    
-  </entry>
   
   <entry>
     <title>Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await</title>
