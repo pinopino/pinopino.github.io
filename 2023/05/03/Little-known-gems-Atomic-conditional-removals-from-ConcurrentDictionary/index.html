@@ -24,12 +24,12 @@
     <meta name="description" content="ConcurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be ac">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Little-known gems:Atomic conditional removals from ConcurrentDictionary">
-<meta property="og:url" content="https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/index.html">
+<meta property="og:url" content="https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/index.html">
 <meta property="og:site_name" content="写代码的大雄">
 <meta property="og:description" content="ConcurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be ac">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-03-05T11:08:32.342Z">
-<meta property="article:modified_time" content="2025-03-05T12:17:08.080Z">
+<meta property="article:published_time" content="2023-05-03T03:23:03.000Z">
+<meta property="article:modified_time" content="2025-03-05T12:33:18.095Z">
 <meta property="article:author" content="写代码的大雄">
 <meta property="article:tag" content=".NET">
 <meta name="twitter:card" content="summary">
@@ -138,8 +138,8 @@
         <h1 class="title">Little-known gems:Atomic conditional removals from ConcurrentDictionary</h1>
         <h5 class="subtitle">
             
-                <time datetime="2025-03-05T11:08:32.342Z" itemprop="datePublished" class="page-time">
-  2025-03-05
+                <time datetime="2023-05-03T03:23:03.000Z" itemprop="datePublished" class="page-time">
+  2023-05-03
 </time>
 
 
@@ -164,7 +164,7 @@
     <div class="post-card">
         <h1 class="post-card-title">Little-known gems:Atomic conditional removals from ConcurrentDictionary</h1>
         <div class="post-meta">
-            <time class="post-time" title="2025-03-05 19:08:32" datetime="2025-03-05T11:08:32.342Z"  itemprop="datePublished">2025-03-05</time>
+            <time class="post-time" title="2023-05-03 11:23:03" datetime="2023-05-03T03:23:03.000Z"  itemprop="datePublished">2023-05-03</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a></li></ul>
@@ -189,7 +189,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2025-03-05T12:17:08.080Z" itemprop="dateUpdated">2025-03-05 20:17:08</time>
+    最后更新时间：<time datetime="2025-03-05T12:33:18.095Z" itemprop="dateUpdated">2025-03-05 20:33:18</time>
 </span><br>
 
 
@@ -223,7 +223,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -233,22 +233,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&via=https://pinopino.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&url=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&via=https://pinopino.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -268,14 +268,21 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2023/07/22/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await</h4>
+      </a>
+    </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2023/07/22/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/" id="post-next" class="post-nav-link">
+      <a href="/2023/04/27/await-anything/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await</h4>
+        <h4 class="title">await anything</h4>
       </a>
     </div>
   
@@ -366,7 +373,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -376,22 +383,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&via=https://pinopino.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&url=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&via=https://pinopino.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -402,7 +409,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD5UlEQVR42u3aSW7jQBAEQP3/0/LVgC0qs6rpBQidBrJMNkMDpGt5POLX89Pr+v3n5evzZ159/vr9r3e/PsnjjhcOHDhw4IgfdXa42bHy9/Ozbb4kHDhw4MBxliOJsevj5ldov4w88g98JThw4MCB45c4kqKuLaLyL2AW/zhw4MCB479wbMq/PEo3j4oDBw4cOH6eYzYoSn6aN+zyz+el4I29Uhw4cODAMamqiuLqL//7lv0OHDhw4MBRjnw2CwSz8EuC9tSzfHN3HDhw4MCx5sgDKR/wJFG9z7u8ZVk3InHgwIEDx4JjFUiLkm+/rLBfrai7pDhw4MCBo0zDfIFgvzRw/U7y8Pe1OHHgwIEDx54jj6hNmXS27pytNUTrFzhw4MCB4xBHfqH2kdqgTWJ1P156eX0cOHDgwLHmmIVi/s4mAvfDsGRkhQMHDhw4znJsbrwJ6baFd2qI9UYABw4cOHCsOfLonYV03uw71Sis/76YTa5w4MCBA0fcttvEYb7ilp+hbfANm4Y4cODAgeNmjrYBl0fjrHhrFxfy6xSzLxw4cODAEfx0UzjlQ51Z2ZaHblvmvTwDDhw4cOA4OX8pAu/uMm+2vpC0C1f9URw4cODAcdt4aROcm/HVbKGhxcWBAwcOHBuOU8tt7QrdvrW3P//L/xc4cODAgWN0/c3CWRJ4s7WGtiE4u/43J8eBAwcOHGuOvHxqsVrEtgzLCVaFJQ4cOHDgGHHMJlT5QkN7/Txc8xWHYrSGAwcOHDgOcSQ33kfaLCZzsvZZ3vRKceDAgQPHmuNU3G4agm3oJkVjsUiHAwcOHDjWHO0Dzwqt/Mr5WGv2wJvyEgcOHDhwtByzlbj2NrN43qAMwxUHDhw4cJQceXxuAjUv0jYhnYzB3kQyDhw4cOBYc8yag5vyaR/YbXlW3wUHDhw4cKw52tBNHnI/Ikqahu1qRVHX4sCBAweO2ziuf2024Dm13LZZX4gGTjhw4MCBo+S4Dtc2bmdFYB60yW/l9HWvFAcOHDhwlByn1tFmRdTsDAl6EcY4cODAgeMQR3u55Gb5olv++fyPg7YViAMHDhw4TnHklzu10PaIX/kC3NkYxoEDBw4cG45n+WqjdB/A+Z8Cs1MV3wAOHDhw4OhyrY6l2ZgnWX3IB2D5cOtUPOPAgQMHjoRjVixthkl5TLZfzD7+ceDAgQPHKY5TQTgbYh17mEXzEQcOHDhw/BZHftC8iJo9atvEjO6OAwcOHDh+nKN9jLx1mK8stC3CoijFgQMHDhyHONqDnnr4vCCcLUDUC3Y4cODAgWPNkbfSWpp2EFUUWvFnZvQ4cODAgWPE8QFYBjQ2ZDgPIgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD2ElEQVR42u3aW07jQBAF0Ox/08wCgs29Ve3ASMdfiDjt7mOkoh6vV3x9vV35ne/fev/56p77J17d//7p4QsHDhw4cJRHbTc321b++3xvyW9+gMaBAwcOHIc4kjCWHD5ZoX0ZV/c/8kpw4MCBA8cvcdxvK0n2Zi8gfxYOHDhw4Ph/OTbpXx5KN0fFgQMHDhyf55g1ipLiXf6t/P48FXywVooDBw4cOCZZVV0o/Js/PzLfgQMHDhw4ypZPO0CQJ3ubQHvqLN88HQcOHDhwrDnygPRIg2dxsJa+KETiwIEDB44Fx6aZ9JkhtrYgOHuFr31vDQcOHDhwLIqDp8bpZqF6c4zDZUQcOHDgwHHxxLb9n4fA5/LO2VhDEvhx4MCBA8dZjifKcG2gTcLqvr10uT4OHDhw4Fhz5OXCJPhtENsssy0O1lksDhw4cOAYceQPbgNe20ZKUPZNrB9OhwMHDhw41hwtxLDoVgbpTaFw1WHDgQMHDhwLjk04nCV+eSjdFPiGRUMcOHDgwPEwx6yo16ZPswA5G62oc1kcOHDgwFFyzBo8s8RplrZtBvWGRUMcOHDgwHGy/1IEvM09m0RxNgyxqpjiwIEDB44Rx35b7bBCW2psP93g4sCBAweODcep4bakpLhpULXFx+H6OHDgwIFjwbEv9iXp2T7BmzW97tf/hhIHDhw4cBzlaEt4+chau36b5s32Hy2KAwcOHDhGHLMO1T49m62cp4h1cRAHDhw4cBziKJKcxUDDJkzmZDliURzEgQMHDhwxx2eCYlsQPLV+TnA50IADBw4cOEYcs7GAJIVLwuqs+NgOzLV7w4EDBw4ce47k4/zY+Tr56MMGJR+DwIEDBw4cG448fLZFt1kgz9ds9xkNT+DAgQMHjjVHfphZcjUr2M1W24TeH/5GcODAgQPHKMOaBd19YtY2mfIyYvtdHDhw4MDxGY52oc2YwiYkt6BRwwkHDhw4cJQc98G16FbFQO2IQzsYkTPVtVIcOHDgwFFynBpHmyVRsz0kr6cI3jhw4MCB4xDHqaRuFuTy+/N/DoZpJw4cOHDgWHPky50aaHvFVz4AdzYM48CBAweODcdXebWhdB+A838FZrsq3gAOHDhw4OjiWh2W7g/QArWpWnK8JPkcYuHAgQMHjluOWbLUbn1WBJyNL2zCPw4cOHDgOMVxNhCeLd4Vh1kUH3HgwIEDx29x7EfrZoMReXGzXWEVaHHgwIEDx9GcJflWntrNSpCHAzYOHDhw4DjE0W40YdoMup0agKgTSxw4cODAsebIS2ktTZ5utWE+v2dGjwMHDhw4Rhz/AOnEmt0wb6FKAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

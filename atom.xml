@@ -6,7 +6,7 @@
   <link href="https://pinopino.github.io/atom.xml" rel="self"/>
   
   <link href="https://pinopino.github.io/"/>
-  <updated>2025-03-05T12:17:08.080Z</updated>
+  <updated>2025-03-05T12:33:24.864Z</updated>
   <id>https://pinopino.github.io/</id>
   
   <author>
@@ -17,26 +17,28 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Little-known gems:Atomic conditional removals from ConcurrentDictionary</title>
-    <link href="https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/"/>
-    <id>https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/</id>
-    <published>2025-03-05T11:08:32.342Z</published>
-    <updated>2025-03-05T12:17:08.080Z</updated>
+    <title>await-anything-copy</title>
+    <link href="https://pinopino.github.io/2025/03/05/await-anything-copy/"/>
+    <id>https://pinopino.github.io/2025/03/05/await-anything-copy/</id>
+    <published>2025-03-05T12:33:01.000Z</published>
+    <updated>2025-03-05T12:33:24.864Z</updated>
     
-    <content type="html"><![CDATA[<p>ConcurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be accessing the dictionary at the same time without corrupting it. It supports adding through its TryAdd method, conditional updates through its TryUpdate method, non-conditional adds or updates through its indexer’s setter, and removals through its TryRemove method, through which a key&#x2F;value pair is removed if the user-provided key matches.  It also has several compound methods, such as GetOrAdd and AddOrUpdate. Lately, however, we’ve seen several folks ask for further support on ConcurrentDictionary, that of removing a key&#x2F;value pair only if both the user-provided key and value match the corresponding pair currently stored in the dictionary. </p><p>You want it, you got it! I mean, literally, you already have it. As with Dictionary&lt;TKey,TValue&gt;, ConcurrentDictionary&lt;TKey,TValue&gt; implements ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt;. ICollection<T> exposes a Remove<T> method, so ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt; has a Remove(KeyValuePair&lt;TKey,TValue&gt;) method. Dictionary&lt;TKey,TValue&gt; implements Remove such that it only removes the element if both the key and the value match the data in the dictionary, and thus ConcurrentDictionary&lt;TKey,TValue&gt; does the same. And as it’s a concurrent data structure, ConcurrentDictionary&lt;TKey,TValue&gt; ensures that the comparison is done atomically with the removal. Tada!</p><p>Of course, just as with Dictionary&lt;TKey,TValue&gt;, ConcurrentDictionary&lt;TKey,TValue&gt; implements ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt; explicitly, so if you want access to this method, you’ll need to first cast the dictionary to the interface. Here’s an extension method to help you with that cause:</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">bool</span> <span class="title">TryRemove</span>&lt;<span class="title">TKey</span>, <span class="title">TValue</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">this</span> ConcurrentDictionary&lt;TKey, TValue&gt; dictionary, TKey key, TValue <span class="keyword">value</span></span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (dictionary == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentNullException(“dictionary”);</span><br><span class="line">    <span class="keyword">return</span> ((ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;)dictionary).Remove(</span><br><span class="line">        <span class="keyword">new</span> KeyValuePair&lt;TKey, TValue&gt;(key, <span class="keyword">value</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Enjoy!</p>]]></content>
+    <content type="html"><![CDATA[<p>oncurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be accessing the dictionary at the same time without corrupting it. It supports adding through its TryAdd method, conditional updates through its TryUpdate method, non-conditional adds or updates through its indexer’s setter, and removals through its TryRemove method, through which a key&#x2F;value pair is removed if the user-provided key matches.  It also has several compound methods, such as GetOrAdd and AddOrUpdate. Lately, however, we’ve seen several folks ask for further support on ConcurrentDictionary, that of removing a key&#x2F;value pair only if both the user-provided key and value match the corresponding pair currently stored in the dictionary. </p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;ConcurrentDictionary&amp;lt;TKey,TValue&amp;gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe r</summary>
+    <summary type="html">&lt;p&gt;oncurrentDictionary&amp;lt;TKey,TValue&amp;gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe re</summary>
       
     
     
     
-    <category term="编程" scheme="https://pinopino.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
     
+    <category term="a" scheme="https://pinopino.github.io/tags/a/"/>
     
-    <category term=".NET" scheme="https://pinopino.github.io/tags/NET/"/>
+    <category term="b" scheme="https://pinopino.github.io/tags/b/"/>
+    
+    <category term="c" scheme="https://pinopino.github.io/tags/c/"/>
     
   </entry>
   
@@ -65,6 +67,30 @@
     <category term="异步" scheme="https://pinopino.github.io/tags/%E5%BC%82%E6%AD%A5/"/>
     
     <category term="performance" scheme="https://pinopino.github.io/tags/performance/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Little-known gems:Atomic conditional removals from ConcurrentDictionary</title>
+    <link href="https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/"/>
+    <id>https://pinopino.github.io/2023/05/03/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/</id>
+    <published>2023-05-03T03:23:03.000Z</published>
+    <updated>2025-03-05T12:33:18.095Z</updated>
+    
+    <content type="html"><![CDATA[<p>ConcurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be accessing the dictionary at the same time without corrupting it. It supports adding through its TryAdd method, conditional updates through its TryUpdate method, non-conditional adds or updates through its indexer’s setter, and removals through its TryRemove method, through which a key&#x2F;value pair is removed if the user-provided key matches.  It also has several compound methods, such as GetOrAdd and AddOrUpdate. Lately, however, we’ve seen several folks ask for further support on ConcurrentDictionary, that of removing a key&#x2F;value pair only if both the user-provided key and value match the corresponding pair currently stored in the dictionary. </p><p>You want it, you got it! I mean, literally, you already have it. As with Dictionary&lt;TKey,TValue&gt;, ConcurrentDictionary&lt;TKey,TValue&gt; implements ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt;. ICollection<T> exposes a Remove<T> method, so ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt; has a Remove(KeyValuePair&lt;TKey,TValue&gt;) method. Dictionary&lt;TKey,TValue&gt; implements Remove such that it only removes the element if both the key and the value match the data in the dictionary, and thus ConcurrentDictionary&lt;TKey,TValue&gt; does the same. And as it’s a concurrent data structure, ConcurrentDictionary&lt;TKey,TValue&gt; ensures that the comparison is done atomically with the removal. Tada!</p><p>Of course, just as with Dictionary&lt;TKey,TValue&gt;, ConcurrentDictionary&lt;TKey,TValue&gt; implements ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt; explicitly, so if you want access to this method, you’ll need to first cast the dictionary to the interface. Here’s an extension method to help you with that cause:</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">bool</span> <span class="title">TryRemove</span>&lt;<span class="title">TKey</span>, <span class="title">TValue</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">this</span> ConcurrentDictionary&lt;TKey, TValue&gt; dictionary, TKey key, TValue <span class="keyword">value</span></span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (dictionary == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentNullException(“dictionary”);</span><br><span class="line">    <span class="keyword">return</span> ((ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;)dictionary).Remove(</span><br><span class="line">        <span class="keyword">new</span> KeyValuePair&lt;TKey, TValue&gt;(key, <span class="keyword">value</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Enjoy!</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;ConcurrentDictionary&amp;lt;TKey,TValue&amp;gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe r</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://pinopino.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term=".NET" scheme="https://pinopino.github.io/tags/NET/"/>
     
   </entry>
   
