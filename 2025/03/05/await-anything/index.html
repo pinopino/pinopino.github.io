@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>await anything | 写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content=".NET,珠玑,异步">
+    <meta name="description" content="One of the very cool things about the new await keyword in C# and Visual Basic is that it’s pattern based.  It works great with Task and Task, and awaiting those two types will represent the vast majo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="await anything">
+<meta property="og:url" content="https://pinopino.github.io/2025/03/05/await-anything/index.html">
+<meta property="og:site_name" content="写代码的大雄">
+<meta property="og:description" content="One of the very cool things about the new await keyword in C# and Visual Basic is that it’s pattern based.  It works great with Task and Task, and awaiting those two types will represent the vast majo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-05T11:01:47.268Z">
+<meta property="article:modified_time" content="2025-03-05T11:22:43.499Z">
+<meta property="article:author" content="写代码的大雄">
+<meta property="article:tag" content=".NET">
+<meta property="article:tag" content="珠玑">
+<meta property="article:tag" content="异步">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="写代码的大雄" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">写代码的大雄</h5>
+          <a href="mailto:myhinata@126.com" title="myhinata@126.com" class="mail">myhinata@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/pinopino" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">await anything</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">await anything</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2025-03-05T11:01:47.268Z" itemprop="datePublished" class="page-time">
+  2025-03-05
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-await-anything"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">await anything</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2025-03-05 19:01:47" datetime="2025-03-05T11:01:47.268Z"  itemprop="datePublished">2025-03-05</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>One of the very cool things about the new await keyword in C# and Visual Basic is that it’s pattern based.  It works great with Task and Task<TResult>, and awaiting those two types will represent the vast majority of uses, but they’re by no means the only types that can be awaited.  The languages support awaiting any instance that exposes the right method (either instance method or extension method): GetAwaiter. A GetAwaiter needs to implement the INotifyCompletion interface (and optionally the ICriticalNotifyCompletion interface) and return a type that itself exposes three members:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bool</span> IsCompleted &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnCompleted</span>(<span class="params">Action continuation</span>)</span>;</span><br><span class="line"><span class="function">TResult <span class="title">GetResult</span>()</span>; <span class="comment">// TResult can also be void</span></span><br></pre></td></tr></table></figure>
+
+<p>As an example of this, Task’s GetAwaiter method returns a value of type TaskAwaiter:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">struct</span> TaskAwaiter : ICriticalNotifyCompletion</span><br></pre></td></tr></table></figure>
+
+<p>and that’s what enables awaiting the Task. This is a simplification, but in short the OnCompleted method registers the Action as a continuation onto the Task (e.g. with ContinueWith), such that when the task completes, it will cause the compiler-generated state machine around the await to pick back up where it left off.</p>
+<p>The title of this post is “await anything;”, so let’s see how we can await things besides Task and Task<TResult>.  To do that, we’ll need appropriate “awaiter” types for the “awaitable” type to await.  That doesn’t mean we have to write new “awaiter” types, however.  There are really two different approaches to making something awaitable: develop a new awaiter type that exposes the right pattern, or figure out how to create a Task or Task<TResult> from the thing being awaited, and then just reuse Task or Task<TResult>’s awaiter.  For the majority of cases, the latter approach is very straightforward, so we’ll start with that.</p>
+<p>Let’s say you want to be able to write code like:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> TimeSpan.FromMinutes(<span class="number">15</span>);</span><br></pre></td></tr></table></figure>
+
+<p>in order to asynchronously pause for 15 minutes.  To do that, we can develop a 1-line GetAwaiter method for TimeSpan:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TaskAwaiter <span class="title">GetAwaiter</span>(<span class="params"><span class="keyword">this</span> TimeSpan timeSpan</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> TaskEx.Delay(timeSpan).GetAwaiter();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>That’s it.  Or let’s say we like waiting for periods of time so much, that we want to simply this down to just:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> <span class="number">15000</span>; <span class="comment">// in milliseconds</span></span><br></pre></td></tr></table></figure>
+
+<p>No problem, we can do that with another one-line awaiter:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TaskAwaiter <span class="title">GetAwaiter</span>(<span class="params"><span class="keyword">this</span> Int32 millisecondsDue</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> TimeSpan.FromMilliseconds(millisecondsDue).GetAwaiter();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Let’s say we like waiting for time-like things so much that we want to be able to wait until a particular date&#x2F;time, ala</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> DateTimeOffset.UtcNow.AddMinutes(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Again, piece of cake:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TaskAwaiter <span class="title">GetAwaiter</span>(<span class="params"><span class="keyword">this</span> DateTimeOffset dateTimeOffset</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (dateTimeOffset – DateTimeOffset.UtcNow).GetAwaiter();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Tired of time? Alright. The GetAwaiter function for Task allows you to wait for a single task, how about enabling waiting for an enumerable of tasks so that you can write code like:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> <span class="function"><span class="keyword">from</span> url <span class="keyword">in</span> urls <span class="keyword">select</span> <span class="title">DownloadAsync</span>(<span class="params">url</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Easy peasy:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TaskAwaiter <span class="title">GetAwaiter</span>(<span class="params"><span class="keyword">this</span> IEnumerable&lt;Task&gt; tasks</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> TaskEx.WhenAll(tasks).GetAwaiter();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>All of the examples thus far were one-liners because we already have a function that takes the input to the extension method and produces a task from it.  However, with just a few more lines, you can convert almost anything that has some notion of future completion into a task, through the TaskCompletionSource<TResult> type.  If you can express your need by completing the statement “I want to await until …” or “I want the await to complete when …”, this is likely a good approach for you.</p>
+<p>As an example, consider wanting to spin up another process and then asynchronously wait for that process to complete, e.g.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> Process.Start(“Foo.exe”);</span><br></pre></td></tr></table></figure>
+
+<p>You could do that with a GetAwaiter method like the following:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TaskAwaiter&lt;<span class="built_in">int</span>&gt; <span class="title">GetAwaiter</span>(<span class="params"><span class="keyword">this</span> Process process</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> tcs = <span class="keyword">new</span> TaskCompletionSource&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">    process.EnableRaisingEvents = <span class="literal">true</span>;</span><br><span class="line">    process.Exited += (s, e) =&gt; tcs.TrySetResult(process.ExitCode);</span><br><span class="line">    <span class="keyword">if</span> (process.HasExited) tcs.TrySetResult(process.ExitCode);</span><br><span class="line">    <span class="keyword">return</span> tcs.Task.GetAwaiter();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Or maybe you want to asynchronously wait until cancellation is requested, e.g.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> cancellationToken;</span><br></pre></td></tr></table></figure>
+
+<p>That could be done with a GetAwaiter like the following:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TaskAwaiter <span class="title">GetAwaiter</span>(<span class="params"><span class="keyword">this</span> CancellationToken cancellationToken</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> tcs = <span class="keyword">new</span> TaskCompletionSource&lt;<span class="built_in">bool</span>&gt;();</span><br><span class="line">    Task t = tcs.Task;</span><br><span class="line">    <span class="keyword">if</span> (cancellationToken.IsCancellationRequested) tcs.SetResult(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">else</span> cancellationToken.Register(s =&gt; ((TaskCompletionSource&lt;<span class="built_in">bool</span>&gt;)s).SetResult(<span class="literal">true</span>), tcs);</span><br><span class="line">    <span class="keyword">return</span> t.GetAwaiter();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You get the idea.</p>
+<p>The second approach to making an awaitable type is to implement a custom awaiter.  This could either be a separate type that’s returned by GetAwaiter and that exposes the IsCompleted&#x2F;OnCompleted&#x2F;GetResult members, or it could be a GetAwaiter method that returns “this”, with IsCompleted&#x2F;OnCompleted&#x2F;GetResult also exposed on the awaitable type.  You’d typically go this route if you can’t express your desire as “I want the await to complete when…”, but rather as “When the await completes, I want to continue executing …”, filling in the blank for that “…”.  In particular, you’d need to use this approach if you need full control over how (rather than when) the “Action continuation” delegate is invoked.</p>
+<p>Imagine, for example, that you wanted to launch some work to run on the ThreadPool.  This work would compute a string and then store the result into a control on your UI.  To modify the control, you need to be on the UI thread, so you somehow need to transition to the UI thread to do that work.  If this were, for example, a Windows Forms application, we could accomplish this by building an awaiter for a Windows Forms Control.  That would allow us to write code like:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ThreadPool.QueueUserWorkItem(<span class="keyword">async</span> <span class="built_in">delegate</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> text = ComputeString();</span><br><span class="line">    <span class="keyword">await</span> button1;</span><br><span class="line">    button1.Text = text;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>We want the operation of awaiting the button1 to transition to the UI thread and then continue the execution there. We can do that with an implementation like the following:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ControlAwaiter <span class="title">GetAwaiter</span>(<span class="params"><span class="keyword">this</span> Control control</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ControlAwaiter(control);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">struct</span> ControlAwaiter : INotifyCompletion</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> Control m_control;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ControlAwaiter</span>(<span class="params">Control control</span>)</span></span><br><span class="line">    &#123; </span><br><span class="line">        m_control = control;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsCompleted</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> !m_control.InvokeRequired; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnCompleted</span>(<span class="params">Action continuation</span>)</span></span><br><span class="line">    &#123; </span><br><span class="line">        m_control.BeginInvoke(continuation); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GetResult</span>()</span> &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You can also combine these approaches, such as by writing a custom awaiter which wraps the awaiter for a task, layering on additional functionality.  For example, culture information is not flowed by default as part of ExecutionContext, which is the standard .NET mechanism for transferring important environmental information across asynchronous invocations.  What if we wanted to make it easy to flow culture?  Imagine the following syntax for awaiting a task with the flow of culture:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> task.WithCulture();</span><br></pre></td></tr></table></figure>
+
+<p>We could enable that with code like the following:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CultureAwaiter <span class="title">WithCurrentCulture</span>(<span class="params"><span class="keyword">this</span> Task task</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CultureAwaiter(task);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CultureAwaiter</span> : <span class="title">INotifyCompletion</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> TaskAwaiter m_awaiter;</span><br><span class="line">    <span class="keyword">private</span> CultureInfo m_culture;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CultureAwaiter</span>(<span class="params">Task task</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (task == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentNullException(“task”);</span><br><span class="line">        m_awaiter = task.GetAwaiter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CultureAwaiter <span class="title">GetAwaiter</span>()</span> &#123; <span class="keyword">return</span> <span class="keyword">this</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsCompleted &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> m_awaiter.IsCompleted; &#125; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnCompleted</span>(<span class="params">Action continuation</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        m_culture = Thread.CurrentThread.CurentCulture; </span><br><span class="line">        m_awaiter.OnCompleted(continuation);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GetResult</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (m_culture != <span class="literal">null</span>) Thread.CurrentThread.CurrentCulture = m_culture; </span><br><span class="line"></span><br><span class="line">        m_awaiter.GetResult();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This awaiter implementation wraps a TaskAwaiter, and this implementation’s IsCompleted, OnCompleted, and GetResult members delegate to the contained TaskAwaiter’s.  On top of that, though, the implementation captures the current culture in OnCompleted and then restores it in GetResult.</p>
+<p>By now, it should be obvious that there are loads of interesting possibilities here.  I look forward to seeing all the interesting and useful awaiters you come up with.  Just keep in mind that while there are plenty of “cool” things you can do, code readability and maintainability is really important, so make sure that the coolness isn’t trumped by lack of clarity about the code’s meaning.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2025-03-05T11:22:43.499Z" itemprop="dateUpdated">2025-03-05 19:22:43</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://pinopino.github.io">
+            <img src="/img/avatar.jpg" alt="写代码的大雄">
+            写代码的大雄
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/" rel="tag">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag">异步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8F%A0%E7%8E%91/" rel="tag">珠玑</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/await-anything/&title=《await anything》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/await-anything/&title=《await anything》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/await-anything/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《await anything》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/await-anything/&via=https://pinopino.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/await-anything/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Little-known gems:Atomic conditional removals from ConcurrentDictionary</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Await, and UI, and deadlocks! Oh my!</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢老板~~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>写代码的大雄 &copy; 2025</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/await-anything/&title=《await anything》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/await-anything/&title=《await anything》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/await-anything/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《await anything》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/await-anything/&via=https://pinopino.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/await-anything/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3ay07DMBAFUP7/p8MWCSXcO06R4hyvqtK4PiymnsfXV7yOH+v3+2evz/56vcPZJ29YGBgYj2Ucl2v2mesjrjx1SsXAwHgBIwmF10+dvZMc4ppxfTYMDAyM5NB5MM2DLAYGBsYKIwmabSBeSX0xMDDew0gS1Outk93y6+MHc3EMDIwHMvKq+/+//kh/AwMD41GMo1xtWS1vTB4LCwMDY29GHuBmpJzaDltgYGBgtEX/2YHaRkJxe8XAwNiU0aaR+UHvKqv9AcbAwNiUMQua+RckobNtlGJgYLyNkaSpdw1btG3IfDcMDIy3MdbHL9qgOSvzFb1WDAyMLRhteWtlMCtvMLRXSQwMjPcwZq3H9ZJcfiWNWpgYGBgbMYpwFielLTIP+sVAGAYGxkaMvNCfY/Lkc+WCWA9bYGBgPJZRB7WbRi7yRmnUnMDAwNia0SaueaE/Hwirfx9Wwi4GBsZjGclGM8Zs4Oy22y4GBsamjLYQdlczsuUN50cwMDAey2i3y4NpDs4vo/XMCAYGxkaMHNNeB5Nw2Y7PYmBgvJOxnsS2bdF2OKP43cDAwNiIcZRrdkGcgYeXQgwMjO0YbZjLj3XXDu0VEwMDY1fGUpGrHKeYjXpEz2JgYLyAsdLIzFsCyb/phlwcAwMDY9QSaC+LNRUDAwNjIT/OwXnx7jSJxcDA2JoxawbMktu7BsIwMDDew5gVxfLr3ewQbbjHwMDYlPEN4fUi4Opo9xUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '又见面啦！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await | 写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content=".NET,异步,performance">
+    <meta name="description" content="Asynchronous programming has long been the realm of only the most skilled and masochistic of developers—those with the time, inclination and mental capacity to reason about callback after callback of">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await">
+<meta property="og:url" content="https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/index.html">
+<meta property="og:site_name" content="写代码的大雄">
+<meta property="og:description" content="Asynchronous programming has long been the realm of only the most skilled and masochistic of developers—those with the time, inclination and mental capacity to reason about callback after callback of">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-05T11:29:05.046Z">
+<meta property="article:modified_time" content="2025-03-05T11:40:50.509Z">
+<meta property="article:author" content="写代码的大雄">
+<meta property="article:tag" content=".NET">
+<meta property="article:tag" content="异步">
+<meta property="article:tag" content="performance">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="写代码的大雄" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">写代码的大雄</h5>
+          <a href="mailto:myhinata@126.com" title="myhinata@126.com" class="mail">myhinata@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/pinopino" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2025-03-05T11:29:05.046Z" itemprop="datePublished" class="page-time">
+  2025-03-05
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Getting-the-Right-Mental-Model"><span class="post-toc-number">1.</span> <span class="post-toc-text">Getting the Right Mental Model</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Think-Chunky-Not-Chatty"><span class="post-toc-number">2.</span> <span class="post-toc-text">Think Chunky, Not Chatty</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Know-When-Not-to-Use-Async"><span class="post-toc-number">3.</span> <span class="post-toc-text">Know When Not to Use Async</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Care-About-Context"><span class="post-toc-number">4.</span> <span class="post-toc-text">Care About Context</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#SynchronizationContext"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">SynchronizationContext</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ExecutionContext"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">ExecutionContext</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Lift-Your-Way-out-of-Garbage-Collection"><span class="post-toc-number">5.</span> <span class="post-toc-text">Lift Your Way out of Garbage Collection</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Avoid-Complexity"><span class="post-toc-number">6.</span> <span class="post-toc-text">Avoid Complexity</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Asynchronicity-and-Performance"><span class="post-toc-number">7.</span> <span class="post-toc-text">Asynchronicity and Performance</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Asynchronous-Programming-Async Performance-Understanding-the-Costs-of-Async"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2025-03-05 19:29:05" datetime="2025-03-05T11:29:05.046Z"  itemprop="datePublished">2025-03-05</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Asynchronous programming has long been the realm of only the most skilled and masochistic of developers—those with the time, inclination and mental capacity to reason about callback after callback of non-linear control flow. With the Microsoft .NET Framework 4.5, C# and Visual Basic deliver asynchronicity for the rest of us, such that mere mortals can write asynchronous methods almost as easily as writing synchronous methods. No more callbacks. No more explicit marshaling of code from one synchronization context to another. No more worrying about the flowing of results or exceptions. No more tricks that contort existing language features to ease async development. In short, no more hassle.</p>
+<p>Of course, while it’s now easy to get started writing asynchronous methods (see the articles by (Eric Lippert)[<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/october/asynchronous-programming-easier-asynchronous-programming-with-the-new-visual-studio-async-ctp]">https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/october/asynchronous-programming-easier-asynchronous-programming-with-the-new-visual-studio-async-ctp]</a> and (Mads Torgersen)[<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/october/asynchronous-programming-pause-and-play-with-await]">https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/october/asynchronous-programming-pause-and-play-with-await]</a> in this issue of MSDN Magazine), doing it really well still requires an understanding of what’s happening under the covers. Any time a language or framework raises the level of abstraction at which a developer can program, it invariably also encapsulates hidden performance costs. In many cases, such costs are negligible and can and should be ignored by the vast number of developers implementing the vast number of scenarios. However, it still behooves more advanced developers to really understand what costs exist so they can take any necessary steps to avoid those costs if they do eventually become visible. Such is the case with the asynchronous methods feature in C# and Visual Basic.</p>
+<p>In this article, I’ll explore the ins and outs of asynchronous methods, providing you with a solid understanding of how asynchronous methods are implemented under the covers and discussing some of the more nuanced costs involved. Note that this information isn’t meant to encourage you to contort readable code into something that can’t be maintained, all in the name of micro-optimization and performance. It’s simply to give you information that may help you diagnose any problems you may run across, as well as supply a set of tools to help you overcome such potential issues. Note also that this article is based on a preview release of the .NET Framework 4.5, and it’s likely that specific implementation details will change prior to the final release.</p>
+<h3 id="Getting-the-Right-Mental-Model"><a href="#Getting-the-Right-Mental-Model" class="headerlink" title="Getting the Right Mental Model"></a>Getting the Right Mental Model</h3><p>For decades, developers have used high-level languages like C#, Visual Basic, F# and C++ to develop efficient applications. This experience has informed those developers about the relevant costs of various operations, and that knowledge has informed best development practices. For example, for most use cases, calling a synchronous method is relatively cheap, even more so when the compiler is able to inline the callee into the call site. Thus, developers learn to refactor code into small, maintainable methods, in general without needing to think about any negative ramifications from the increased method invocation count. These developers have a mental model for what it means to call a method.</p>
+<p>With the introduction of asynchronous methods, a new mental model is needed. While the C# and Visual Basic languages and compilers are able to provide the illusion of an asynchronous method being just like its synchronous counterpart, under the covers it’s no such thing. The compiler ends up generating a lot of code on behalf of the developer, code akin to the quantities of boilerplate code that developers implementing asynchronicity in days of yore would’ve had to have written and maintained by hand. Further still, the compiler-generated code calls into library code in the .NET Framework, again increasing the work done on behalf of the developer. To get the right mental model, and then to use that mental model to make appropriate development decisions, it’s important to understand what the compiler is generating on your behalf.</p>
+<h3 id="Think-Chunky-Not-Chatty"><a href="#Think-Chunky-Not-Chatty" class="headerlink" title="Think Chunky, Not Chatty"></a>Think Chunky, Not Chatty</h3><p>When working with synchronous code, methods with empty bodies are practically free. This is not the case for asynchronous methods. Consider the following asynchronous method, which has a single statement in its body (and which due to lack of awaits will end up running synchronously):</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">SimpleBodyAsync</span>()</span> &#123;</span><br><span class="line">  Console.WriteLine(<span class="string">&quot;Hello, Async World!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>An intermediate language (IL) decompiler will reveal the true nature of this function once compiled, with output similar to what’s shown in <strong>Figure 1</strong>. What was a simple one-liner has been expanded into two methods, one of which exists on a helper state machine class. First, there’s a stub method that has the same basic signature as that written by the developer (the method is named the same, it has the same visibility, it accepts the same parameters and it retains its return type), but that stub doesn’t contain any of the code written by the developer. Rather, it contains setup boilerplate. The setup code initializes the state machine used to represent the asynchronous method and then kicks it off using a call to the secondary MoveNext method on the state machine. This state machine type holds state for the asynchronous method, allowing that state to be persisted across asynchronous await points, if necessary. It also contains the body of the method as written by the user, but contorted in a way that allows for results and exceptions to be lifted into the returned Task; for the current position in the method to be maintained so that execution may resume at that location after an await; and so on.</p>
+<p>Figure 1 Asynchronous Method Boilerplate</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">DebuggerStepThrough</span>]     </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Task <span class="title">SimpleBodyAsync</span>()</span> &#123;</span><br><span class="line">  &lt;SimpleBodyAsync&gt;d__0 d__ = <span class="keyword">new</span> &lt;SimpleBodyAsync&gt;d__0();</span><br><span class="line">  d__.&lt;&gt;t__builder = AsyncTaskMethodBuilder.Create();</span><br><span class="line">  d__.MoveNext();</span><br><span class="line">  <span class="keyword">return</span> d__.&lt;&gt;t__builder.Task;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">[<span class="meta">CompilerGenerated</span>]</span><br><span class="line">[<span class="meta">StructLayout(LayoutKind.Sequential)</span>]</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">struct</span> &lt;SimpleBodyAsync&gt;d__0 : &lt;&gt;t__IStateMachine &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">int</span> &lt;&gt;<span class="number">1</span>__state;</span><br><span class="line">  <span class="keyword">public</span> AsyncTaskMethodBuilder &lt;&gt;t__builder;</span><br><span class="line">  <span class="keyword">public</span> Action &lt;&gt;t__MoveNextDelegate;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">MoveNext</span>()</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.&lt;&gt;<span class="number">1</span>__state == <span class="number">-1</span>) <span class="keyword">return</span>;</span><br><span class="line">      Console.WriteLine(<span class="string">&quot;Hello, Async World!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">this</span>.&lt;&gt;<span class="number">1</span>__state = <span class="number">-1</span>;</span><br><span class="line">      <span class="keyword">this</span>.&lt;&gt;t__builder.SetException(e);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">this</span>.&lt;&gt;<span class="number">1</span>__state = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">this</span>.&lt;&gt;t__builder.SetResult();</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>When thinking through what asynchronous methods cost to invoke, keep this boilerplate in mind. The try&#x2F;catch block in the MoveNext method will likely prevent it from getting inlined by the just-in-time (JIT) compiler, so at the very least we’ll now have the cost of a method invocation where in the synchronous case we likely would not (with such a small method body). We have multiple calls into Framework routines (like SetResult). And we have multiple writes to fields on the state machine type. Of course, we need to weigh all of this against the cost of the Console.WriteLine, which will likely dominate all of the other costs involved (it takes locks, it does I&#x2F;O and so forth). Further, notice that there are optimizations the infrastructure does for you. For example, the state machine type is a struct. That struct will only be boxed to the heap if this method ever needs to suspend its execution because it’s awaiting an instance that’s not yet completed, and in this simple method, it never will complete. As such, the boilerplate of this asynchronous method won’t incur any allocations. The compiler and runtime work hard together to minimize the number of allocations involved in the infrastructure.</p>
+<h3 id="Know-When-Not-to-Use-Async"><a href="#Know-When-Not-to-Use-Async" class="headerlink" title="Know When Not to Use Async"></a>Know When Not to Use Async</h3><p>The .NET Framework attempts to generate efficient asynchronous implementations for asynchronous methods, applying multiple optimizations. However, developers often have domain knowledge than can yield optimizations that would be risky and unwise for the compiler and runtime to apply automatically, given the generality they target. With this in mind, it can actually benefit a developer to avoid using async methods in a certain, small set of use cases, particularly for library methods that will be accessed in a more fine-grained manner. Typically, this is the case when it’s known that the method may actually be able to complete synchronously because the data it’s relying on is already available.</p>
+<p>When designing asynchronous methods, the Framework developers spent a lot of time optimizing away object allocations. This is because allocations represent one of the largest performance costs possible in the asynchronous method infrastructure. The act of allocating an object is typically quite cheap. Allocating objects is akin to filling your shopping cart with merchandise, in that it doesn’t cost you much effort to put items into your cart; it’s when you actually check out that you need to pull out your wallet and invest significant resources. While allocations are usually cheap, the resulting garbage collection can be a showstopper when it comes to the application’s performance. The act of garbage collection involves scanning through some portion of objects currently allocated and finding those that are no longer referenced. The more objects allocated, the longer it takes to perform this marking. Further, the larger the allocated objects and the more of them that are allocated, the more frequently garbage collection needs to occur. In this manner, then, allocations have a global effect on the system: the more garbage generated by asynchronous methods, the slower the overall program will run, even if micro benchmarks of the asynchronous methods themselves don’t reveal significant costs.</p>
+<p>For asynchronous methods that actually yield execution (due to awaiting an object that’s not yet completed), the asynchronous method infrastructure needs to allocate a Task object to return from the method, as that Task serves as a unique reference for this particular invocation. However, many asynchronous method invocations can complete without ever yielding. In such cases, the asynchronous method infrastructure may return a cached, already completed Task, one that it can use over and over to avoid allocating unnecessary Tasks. It’s only able to do this in limited circumstances, however, such as when the asynchronous method is a non-generic Task, a Task<Boolean>, or when it’s a Task<TResult> where TResult is a reference type and the result of the asynchronous method is null. While this set may expand in the future, you can often do better if you have domain knowledge of the operation being implemented.</p>
+<p>Consider implementing a type like MemoryStream. MemoryStream derives from Stream, and thus can override Stream’s new .NET 4.5 ReadAsync, WriteAsync and FlushAsync methods to provide optimized implementations for the nature of MemoryStream. Because the operation of reading is simply going against an in-memory buffer and is therefore just a memory copy, better performance results if ReadAsync runs synchronously. Implementing this with an asynchronous method would look something like the following:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">async</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">ReadAsync</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  <span class="built_in">byte</span> [] buffer, <span class="built_in">int</span> offset, <span class="built_in">int</span> count,</span></span></span><br><span class="line"><span class="params"><span class="function">  CancellationToken cancellationToken</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  cancellationToken.ThrowIfCancellationRequested();</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.Read(buffer, offset, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Easy enough. And because Read is a synchronous call, and because there are no awaits in this method that will yield control, all invocations of ReadAsync will actually complete synchronously. Now, let’s consider a standard usage pattern of streams, such as a copy operation:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">byte</span> [] buffer = <span class="keyword">new</span> <span class="built_in">byte</span>[<span class="number">0x1000</span>];</span><br><span class="line"><span class="built_in">int</span> numRead;</span><br><span class="line"><span class="keyword">while</span>((numRead = <span class="keyword">await</span> source.ReadAsync(buffer, <span class="number">0</span>, buffer.Length)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> source.WriteAsync(buffer, <span class="number">0</span>, numRead);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Notice here that ReadAsync on the source stream for this particular series of calls is always invoked with the same count parameter (the buffer’s length), and thus it’s very likely that the return value (the number of bytes read) will also be repeating. Except in some rare circumstances, it’s very unlikely that the asynchronous method implementation of ReadAsync will be able to use a cached Task for its return value, but you can.</p>
+<p>Consider rewriting this method as shown in <strong>Figure 2</strong>. By taking advantage of the specific aspects of this method and its common usage scenarios, we’ve now been able to optimize allocations away on the common path in a way we couldn’t expect the underlying infrastructure to do. With this, every time a call to ReadAsync retrieves the same number of bytes as the previous call to ReadAsync, we’re able to completely avoid any allocation overhead from the ReadAsync method by returning the same Task we returned on the previous invocation. And for a low-level operation like this that we expect to be very fast and to be invoked repeatedly, such an optimization can make a noticeable difference, especially in the number of garbage collections that occur.</p>
+<p>Figure 2 Optimizing Task Allocations</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Task&lt;<span class="built_in">int</span>&gt; m_lastTask;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">override</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">ReadAsync</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  <span class="built_in">byte</span> [] buffer, <span class="built_in">int</span> offset, <span class="built_in">int</span> count,</span></span></span><br><span class="line"><span class="params"><span class="function">  CancellationToken cancellationToken</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (cancellationToken.IsCancellationRequested) &#123;</span><br><span class="line">    <span class="keyword">var</span> tcs = <span class="keyword">new</span> TaskCompletionSource&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">    tcs.SetCanceled();</span><br><span class="line">    <span class="keyword">return</span> tcs.Task;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="built_in">int</span> numRead = <span class="keyword">this</span>.Read(buffer, offset, count);</span><br><span class="line">      <span class="keyword">return</span> m_lastTask != <span class="literal">null</span> &amp;&amp; numRead == m_lastTask.Result ?</span><br><span class="line">        m_lastTask : (m_lastTask = Task.FromResult(numRead));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">    <span class="keyword">var</span> tcs = <span class="keyword">new</span> TaskCompletionSource&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">    tcs.SetException(e);</span><br><span class="line">    <span class="keyword">return</span> tcs.Task;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>A related optimization to avoid the task allocation may be done when the scenario dictates caching. Consider a method whose purpose it is to download the contents of a particular Web page and then cache its successfully downloaded contents for future accesses. Such functionality might be written using an asynchronous method as follows (using the new System.Net.Http.dll library in .NET 4.5):</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ConcurrentDictionary&lt;<span class="built_in">string</span>,<span class="built_in">string</span>&gt; s_urlToContents;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">string</span>&gt; <span class="title">GetContentsAsync</span>(<span class="params"><span class="built_in">string</span> url</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">string</span> contents;</span><br><span class="line">  <span class="keyword">if</span> (!s_urlToContents.TryGetValue(url, <span class="keyword">out</span> contents))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">var</span> response = <span class="keyword">await</span> <span class="keyword">new</span> HttpClient().GetAsync(url);</span><br><span class="line">    contents = response.EnsureSuccessStatusCode().Content.ReadAsString();</span><br><span class="line">    s_urlToContents.TryAdd(url, contents);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> contents;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This is a straightforward implementation. And for calls to GetContentsAsync that can’t be satisfied from the cache, the overhead of constructing a new Task<string> to represent this download will be negligible when compared to the network-related costs. However, for cases where the contents may be satisfied from the cache, it could represent a non-negligible cost, an object allocation simply to wrap and hand back already available data.</p>
+<p>To avoid that cost (if doing so is required to meet your performance goals), you could rewrite this method as shown in <strong>Figure 3</strong>. We now have two methods: a synchronous public method, and an asynchronous private method to which the public method delegates. The dictionary is now caching the generated tasks rather than their contents, so future attempts to download a page that’s already been successfully downloaded can be satisfied with a simple dictionary access to return an already existing task. Internally, we also take advantage of the ContinueWith methods on Task that allow us to store the task into the dictionary once the Task has completed—but only if the download succeeded. Of course, this code is more complicated and requires more thought to write and maintain, so as with any performance optimizations, avoid spending time making them until performance testing proves that the complications make an impactful and necessary difference. Whether such optimizations make a difference really depends on usage scenarios. You’ll want to come up with a suite of tests that represent common usage patterns, and use analysis of those tests to determine whether these complications improve your code’s performance in a meaningful way.</p>
+<p>Figure 3 Manually Caching Tasks</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ConcurrentDictionary&lt;<span class="built_in">string</span>,Task&lt;<span class="built_in">string</span>&gt;&gt; s_urlToContents;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Task&lt;<span class="built_in">string</span>&gt; <span class="title">GetContentsAsync</span>(<span class="params"><span class="built_in">string</span> url</span>)</span> &#123;</span><br><span class="line">  Task&lt;<span class="built_in">string</span>&gt; contents;</span><br><span class="line">  <span class="keyword">if</span> (!s_urlToContents.TryGetValue(url, <span class="keyword">out</span> contents)) &#123;</span><br><span class="line">      contents = GetContentsInternalAsync(url);</span><br><span class="line">      contents.ContinueWith(<span class="built_in">delegate</span> &#123;</span><br><span class="line">        s_urlToContents.TryAdd(url, contents);</span><br><span class="line">      &#125;, CancellationToken.None,</span><br><span class="line">        TaskContinuationOptions.OnlyOnRanToCompletion |</span><br><span class="line">         TaskContinuatOptions.ExecuteSynchronously,</span><br><span class="line">        TaskScheduler.Default);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> contents;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">string</span>&gt; <span class="title">GetContentsInternalAsync</span>(<span class="params"><span class="built_in">string</span> url</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> response = <span class="keyword">await</span> <span class="keyword">new</span> HttpClient().GetAsync(url);</span><br><span class="line">  <span class="keyword">return</span> response.EnsureSuccessStatusCode().Content.ReadAsString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Another task-related optimization to consider is whether you even need the returned Task from an asynchronous method. C# and Visual Basic both support the creation of asynchronous methods that return void, in which case no Task is allocated for the method, ever. Asynchronous methods exposed publicly from libraries should always be written to return a Task or Task<TResult>, because you as a library developer don’t know whether the consumer desires to wait on the completion of that method. However, for certain internal usage scenarios, void-returning asynchronous methods can have their place. The primary reason void-returning asynchronous methods exist is to support existing event-driven environments, like ASP.NET and Windows Presentation Foundation (WPF). They make it easy to implement button handlers, page-load events and the like through the use of async and await. If you do consider using an async void method, be very careful around exception handling: exceptions that escape an async void method bubble out into whatever SynchronizationContext was current at the time the async void method was invoked.</p>
+<h3 id="Care-About-Context"><a href="#Care-About-Context" class="headerlink" title="Care About Context"></a>Care About Context</h3><p>There are many kinds of “context” in the .NET Framework: LogicalCallContext, SynchronizationContext, HostExecutionContext, SecurityContext, ExecutionContext and more (from the sheer number you might expect that the developers of the Framework are monetarily incentivized to introduce new contexts, but I assure you we’re not). Some of these contexts are very relevant to asynchronous methods, not only in functionality, but also in their impact on asynchronous method performance. </p>
+<h4 id="SynchronizationContext"><a href="#SynchronizationContext" class="headerlink" title="SynchronizationContext"></a>SynchronizationContext</h4><p>SynchronizationContext plays a big role in asynchronous methods. A “synchronization context” is simply an abstraction over the ability to marshal delegate invocation in a manner specific to a given library or framework. For example, WPF provides a DispatcherSynchronizationContext to represent the UI thread for a Dispatcher: posting a delegate to this synchronization context causes that delegate to be queued for execution by the Dispatcher on its thread. ASP.NET provides an AspNetSynchronizationContext, which is used to ensure that asynchronous operations that occur as part of the processing of an ASP.NET request are executed serially and are associated with the right HttpContext state. And so on. All told, there are around 10 concrete implementations of SynchronizationContext within the .NET Framework, some public, some internal.</p>
+<p>When awaiting Tasks and other awaitable types provided by the .NET Framework, the “awaiters” for those types (like TaskAwaiter) capture the current SynchronizationContext at the time the await is issued. Upon completion of the awaitable, if there was a current SynchronizationContext that got captured, the continuation representing the remainder of the asynchronous method is posted to that SynchronizationContext. With that, developers writing an asynchronous method called from a UI thread don’t need to manually marshal invocations back to the UI thread in order to modify UI controls: such marshaling is handled automatically by the Framework infrastructure.</p>
+<p>Unfortunately, such marshaling also involves cost. For application developers using await to implement their control flow, this automatic marshaling is almost always the right solution. Libraries, however, are often a different story. Application developers typically need such marshaling because their code cares about the context under which it’s running, such as being able to access UI controls, or being able to access the HttpContext for the right ASP.NET request. Most libraries, however, do not suffer this constraint. As a result, this automatic marshaling is frequently an entirely unnecessary cost. Consider again the code shown earlier to copy data from one stream to another:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">byte</span> [] buffer = <span class="keyword">new</span> <span class="built_in">byte</span>[<span class="number">0x1000</span>];</span><br><span class="line"><span class="built_in">int</span> numRead;</span><br><span class="line"><span class="keyword">while</span>((numRead = <span class="keyword">await</span> source.ReadAsync(buffer, <span class="number">0</span>, buffer.Length)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> source.WriteAsync(buffer, <span class="number">0</span>, numRead);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If this copy operation is invoked from a UI thread, every awaited read and write operation will force the completion back to the UI thread. For a megabyte of source data and Streams that complete reads and writes asynchronously (which is most of them), that means upward of 500 hops from background threads to the UI thread. To address this, the Task and Task<TResult> types provide a ConfigureAwait method. ConfigureAwait accepts a Boolean continueOnCapturedContext parameter that controls this marshaling behavior. If the default of true is used, the await will automatically complete back on the captured SynchronizationContext. If false is used, however, the SynchronizationContext will be ignored and the Framework will attempt to continue the execution wherever the previous asynchronous operation completed. Incorporating this into the stream-copying code results in the following more efficient version:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">byte</span> [] buffer = <span class="keyword">new</span> <span class="built_in">byte</span>[<span class="number">0x1000</span>];</span><br><span class="line"><span class="built_in">int</span> numRead;</span><br><span class="line"><span class="keyword">while</span>((numRead = <span class="keyword">await</span></span><br><span class="line">  source.ReadAsync(buffer, <span class="number">0</span>, buffer.Length).ConfigureAwait(<span class="literal">false</span>)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> source.WriteAsync(buffer, <span class="number">0</span>, numRead).ConfigureAwait(<span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>For library developers, this performance impact alone is sufficient to warrant always using ConfigureAwait, unless it’s the rare circumstance where the library has domain knowledge of its environment and does need to execute the body of the method with access to the correct context.</p>
+<p>There’s another reason, beyond performance, to use ConfigureAwait in library code. Suppose the preceding code, without ConfigureAwait, was in a method called CopyStreamToStreamAsync, which was invoked from a WPF UI thread, like so:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs <span class="keyword">args</span></span>)</span> &#123;</span><br><span class="line">  Stream src = …, dst = …;</span><br><span class="line">  Task t = CopyStreamToStreamAsync(src, dst);</span><br><span class="line">  t.Wait(); <span class="comment">// deadlock!</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Here, the developer should have written button1_Click as an async method and then await-ed the Task instead of using its synchronous Wait method. The Wait method has its important uses, but it’s almost always wrong to use it for waiting in a UI thread like this. The Wait method won’t return until the Task has completed. In the case of CopyStreamToStreamAsync, the contained awaits try to Post back to the captured SynchronizationContext, and the method can’t complete until those Posts complete (because the Posts are used to process the remainder of the method). But those Posts won’t complete, because the UI thread that would process them is blocked in the call to Wait. This is a circular dependency, resulting in a deadlock. If CopyStreamToStreamAsync had instead been written using ConfigureAwait(false), there would be no circular dependency and no deadlock.</p>
+<h4 id="ExecutionContext"><a href="#ExecutionContext" class="headerlink" title="ExecutionContext"></a>ExecutionContext</h4><p>ExecutionContext is an integral part of the .NET Framework, yet most developers are blissfully unaware of its existence. ExecutionContext is the granddaddy of contexts, encapsulating multiple other contexts like SecurityContext and LogicalCallContext, and representing everything that should be automatically flowed across asynchronous points in code. Any time you’ve used ThreadPool.QueueUserWorkItem, Task.Run, Delegate.BeginInvoke, Stream.BeginRead, WebClient.DownloadStringAsync or any other asynchronous operation in the Framework, under the covers ExecutionContext was captured if possible (via ExecutionContext.Capture), and that captured context was then used to process the provided delegate (via ExecutionContext.Run). For example, if the code invoking ThreadPool.QueueUserWorkItem was impersonating a Windows identity at the time, that same Windows identity would be impersonated in order to run the supplied WaitCallback delegate. And if the code invoking Task.Run had first stored data into the LogicalCallContext, that same data would be accessible through the LogicalCallContext within the supplied Action delegate. ExecutionContext is also flowed across awaits on tasks.</p>
+<p>There are multiple optimizations in place in the Framework to avoid capturing and running under a captured ExecutionContext when doing so is unnecessary, as doing so can be quite expensive. However, actions like impersonating a Windows identity or storing data into LogicalCallContext will thwart these optimizations. Avoiding operations that manipulate ExecutionContext, such as WindowsIdentity.Impersonate and CallContext.LogicalSetData, results in better performance when using asynchronous methods, and when using asynchrony in general.</p>
+<h3 id="Lift-Your-Way-out-of-Garbage-Collection"><a href="#Lift-Your-Way-out-of-Garbage-Collection" class="headerlink" title="Lift Your Way out of Garbage Collection"></a>Lift Your Way out of Garbage Collection</h3><p>Asynchronous methods provide a nice illusion when it comes to local variables. In a synchronous method, local variables in C# and Visual Basic are stack-based, such that no heap allocations are necessary to store those locals. However, in asynchronous methods, the stack for the method goes away when the asynchronous method is suspending at an await point. For data to be available to the method after an await resumes, that data must be stored somewhere. Thus, the C# and Visual Basic compilers “lift” locals into a state machine struct, which is then boxed to the heap at the first await that suspends so that locals may survive across await points.</p>
+<p>Earlier in this article, I discussed how the cost and frequency of garbage collection is influenced by the number of objects allocated, while the frequency of garbage collection is also influenced by the size of objects allocated. The bigger the objects being allocated, the more often garbage collection will need to run. Thus, in an asynchronous method, the more locals that need to be lifted to the heap, the more often garbage collections will occur.</p>
+<p>As of the time of this writing, the C# and Visual Basic compilers sometimes lift more than is truly necessary. For example, consider the following code snippet:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">FooAsync</span>()</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> dto = DateTimeOffset.Now;</span><br><span class="line">  <span class="keyword">var</span> dt  = dto.DateTime;</span><br><span class="line">  <span class="keyword">await</span> Task.Yield();</span><br><span class="line">  Console.WriteLine(dt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The dto variable isn’t read at all after the await point, and thus the value written to it before the await doesn’t need to survive across the await. However, the state machine type generated by the compiler to store locals still contains the dto reference, as shown in <strong>Figure 4</strong>.</p>
+<p>Figure 4 Local Lifting</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">StructLayout(LayoutKind.Sequential), CompilerGenerated</span>]</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">struct</span> &lt;FooAsync&gt;d__0 : &lt;&gt;t__IStateMachine &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">int</span> &lt;&gt;<span class="number">1</span>__state;</span><br><span class="line">  <span class="keyword">public</span> AsyncTaskMethodBuilder &lt;&gt;t__builder;</span><br><span class="line">  <span class="keyword">public</span> Action &lt;&gt;t__MoveNextDelegate;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">public</span> DateTimeOffset &lt;dto&gt;<span class="number">5</span>__1;</span><br><span class="line">  <span class="keyword">public</span> DateTime &lt;dt&gt;<span class="number">5</span>__2;</span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">object</span> &lt;&gt;t__stack;</span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">object</span> &lt;&gt;t__awaiter;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">MoveNext</span>()</span>;</span><br><span class="line">  [<span class="meta">DebuggerHidden</span>]</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> &lt;&gt;t__SetMoveNextDelegate(Action param0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This slightly bloats the size of that heap object beyond what’s truly necessary. If you find that garbage collections are occurring more frequently than you expect, take a look at whether you really need all of the temporary variables you’ve coded into your asynchronous method. This example could be rewritten as follows to avoid the extra field on the state machine class:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">FooAsync</span>()</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> dt = DateTimeOffset.Now.DateTime;</span><br><span class="line">  <span class="keyword">await</span> Task.Yield();</span><br><span class="line">  Console.WriteLine(dt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Moreover, the .NET garbage collector (GC) is a generational collector, meaning that it partitions the set of objects into groups, known as generations: at a high-level, new objects are allocated in generation 0, and then all objects that survive a collection are promoted up a generation (the .NET GC currently uses generations 0, 1 and 2). This enables faster collections by allowing the GC to frequently collect only from a subset of the known object space. It’s based on the philosophy that objects newly allocated will also go away quickly, while objects that have been around for a long time will continue to be around for a long time. What this means is that if an object survives generation 0, it will likely end up being around for a while, continuing to put pressure on the system for that additional time. And that means we really want to ensure that objects are made available to garbage collection as soon as they’re no longer needed.</p>
+<p>With the aforementioned lifting, locals get promoted to fields of a class that stays rooted for the duration of the asynchronous method’s execution (as long as the awaited object properly maintains a reference to the delegate to invoke upon completion of the awaited operation). In synchronous methods, the JIT compiler is able to keep track of when locals will never again be accessed, and at such points can help the GC to ignore those variables as roots, thus making the referenced objects available for collection if they’re not referenced anywhere else. However, in asynchronous methods, these locals remain referenced, which means the objects they reference may survive much longer than if these had been real locals. If you find that objects are remaining alive well past their use, consider nulling out the locals referencing those objects when you’re done with them. Again, this should be done only if you find that it’s actually the cause of a performance problem, as it otherwise complicates the code unnecessarily. Furthermore, the C# and Visual Basic compilers could be updated by final release or otherwise in the future to handle more of these scenarios on the developer’s behalf, so any such code written today is likely to become obsolete in the future.</p>
+<h3 id="Avoid-Complexity"><a href="#Avoid-Complexity" class="headerlink" title="Avoid Complexity"></a>Avoid Complexity</h3><p>The C# and Visual Basic compilers are fairly impressive in terms of where you’re allowed to use awaits: almost anywhere. Await expressions may be used as part of larger expressions, allowing you to await Task<TResult> instances in places you might have any other value-returning expression. For example, consider the following code, which returns the sum of three tasks’ results:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">SumAsync</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  Task&lt;<span class="built_in">int</span>&gt; a, Task&lt;<span class="built_in">int</span>&gt; b, Task&lt;<span class="built_in">int</span>&gt; c</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> Sum(<span class="keyword">await</span> a, <span class="keyword">await</span> b, <span class="keyword">await</span> c);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">int</span> <span class="title">Sum</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b, <span class="built_in">int</span> c</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The C# compiler allows you to use the expression “await b” as an argument to the Sum function. However, there are multiple awaits here whose results are passed as parameters to Sum, and due to order of evaluation rules and how async is implemented in the compiler, this particular example requires the compiler to “spill” the temporary results of the first two awaits. As you saw previously, locals are preserved across await points by having them lifted into fields on the state machine class. However, for cases like this one, where the values are on the CLR evaluation stack, those values aren’t lifted into the state machine but are instead spilled to a single temporary object and then referenced by the state machine. When you complete the await on the first task and go to await the second one, the compiler generates code that boxes the first result and stores the boxed object into a single &lt;&gt;t__stack field on the state machine. When you complete the await on the second task and go to await the third one, the compiler generates code that creates a Tuple&lt;int,int&gt; from the first two values, storing that tuple into the same &lt;&gt;__stack field. This all means that, depending on how you write your code, you could end up with very different allocation patterns. Consider instead writing SumAsync as follows:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">SumAsync</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  Task&lt;<span class="built_in">int</span>&gt; a, Task&lt;<span class="built_in">int</span>&gt; b, Task&lt;<span class="built_in">int</span>&gt; c</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">int</span> ra = <span class="keyword">await</span> a;</span><br><span class="line">  <span class="built_in">int</span> rb = <span class="keyword">await</span> b;</span><br><span class="line">  <span class="built_in">int</span> rc = <span class="keyword">await</span> c;</span><br><span class="line">  <span class="keyword">return</span> Sum(ra, rb, rc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>With this change, the compiler will now emit three more fields onto the state machine class to store ra, rb and rc, and no spilling will occur. Thus, you have a trade-off: a larger state machine class with fewer allocations, or a smaller state machine class with more allocations. The total amount of memory allocated will be larger in the spilling case, as each object allocated has its own memory overhead, but in the end performance testing could reveal that’s still better. In general, as mentioned previously, you shouldn’t think through these kinds of micro-optimizations unless you find that the allocations are actually the cause of grief, but regardless, it’s helpful to know where these allocations are coming from.</p>
+<p>Of course, there’s arguably a much larger cost in the preceding examples that you should be aware of and proactively consider. The code isn’t able to invoke Sum until all three awaits have completed, and no work is done in between the awaits. Each of these awaits that yields requires a fair amount of work, so the fewer awaits you need to process, the better. It would behoove you, then, to combine all three of these awaits into just one by waiting on all of the tasks at once with Task.WhenAll:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">SumAsync</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  Task&lt;<span class="built_in">int</span>&gt; a, Task&lt;<span class="built_in">int</span>&gt; b, Task&lt;<span class="built_in">int</span>&gt; c</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">int</span> [] results = <span class="keyword">await</span> Task.WhenAll(a, b, c);</span><br><span class="line">  <span class="keyword">return</span> Sum(results[<span class="number">0</span>], results[<span class="number">1</span>], results[<span class="number">2</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The Task.WhenAll method here returns a Task&lt;TResult[]&gt; that won’t complete until all of the supplied tasks have completed, and it does so much more efficiently than just waiting on each individual task. It also gathers up the result from each task and stores it into an array. If you want to avoid that array, you can do that by forcing binding to the non-generic WhenAll method that works with Task instead of Task<TResult>. For ultimate performance, you could also take a hybrid approach, where you first check to see if all of the tasks have completed successfully, and if they have, get their resultsindividually—but if they haven’t, then await a WhenAll of those that haven’t. That will avoid any allocations involved in the call to WhenAll when it’s unnecessary, such as allocating the params array to be passed into the method. And, as previously mentioned, we’d want this library function to also suppress context marshaling. Such a solution is shown in <strong>Figure 5</strong>.</p>
+<p>Figure 5 Applying Multiple Optimizations</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">SumAsync</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  Task&lt;<span class="built_in">int</span>&gt; a, Task&lt;<span class="built_in">int</span>&gt; b, Task&lt;<span class="built_in">int</span>&gt; c</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> (a.Status == TaskStatus.RanToCompletion &amp;&amp;</span><br><span class="line">          b.Status == TaskStatus.RanToCompletion &amp;&amp;</span><br><span class="line">          c.Status == TaskStatus.RanToCompletion) ?</span><br><span class="line">    Task.FromResult(Sum(a.Result, b.Result, c.Result)) :</span><br><span class="line">    SumAsyncInternal(a, b, c);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">SumAsyncInternal</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  Task&lt;<span class="built_in">int</span>&gt; a, Task&lt;<span class="built_in">int</span>&gt; b, Task&lt;<span class="built_in">int</span>&gt; c</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">await</span> Task.WhenAll((Task)a, b, c).ConfigureAwait(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> Sum(a.Result, b.Result, c.Result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Asynchronicity-and-Performance"><a href="#Asynchronicity-and-Performance" class="headerlink" title="Asynchronicity and Performance"></a>Asynchronicity and Performance</h3><p>Asynchronous methods are a powerful productivity tool, enabling you to more easily write scalable and responsive libraries and applications. It’s important to keep in mind, though, that asynchronicity is not a performance optimization for an individual operation. Taking a synchronous operation and making it asynchronous will invariably degrade the performance of that one operation, as it still needs to accomplish everything that the synchronous operation did, but now with additional constraints and considerations. A reason you care about asynchronicity, then, is performance in the aggregate: how your overall system performs when you write everything asynchronously, such that you can overlap I&#x2F;O and achieve better system utilization by consuming valuable resources only when they’re actually needed for execution. The asynchronous method implementation provided by the .NET Framework is well-optimized, and often ends up providing as good or better performance than well-written asynchronous implementations using existing patterns and volumes more code. Any time you’re planning to develop asynchronous code in the .NET Framework from now on, asynchronous methods should be your tool of choice. Still, it’s good for you as a developer to be aware of everything the Framework is doing on your behalf in these asynchronous methods, so you can ensure the end result is as good as it can possibly be.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2025-03-05T11:40:50.509Z" itemprop="dateUpdated">2025-03-05 19:40:50</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://pinopino.github.io">
+            <img src="/img/avatar.jpg" alt="写代码的大雄">
+            写代码的大雄
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/" rel="tag">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/performance/" rel="tag">performance</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag">异步</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/&title=《Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/&title=《Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/&via=https://pinopino.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Little-known gems:Atomic conditional removals from ConcurrentDictionary</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢老板~~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>写代码的大雄 &copy; 2025</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/&title=《Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/&title=《Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/&via=https://pinopino.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD9ElEQVR42u3aQXLCQAwEQP7/6eQDsZmR1gmpak5UBRtvc1BG0usVv77i1/21yd2urrq68/23vJ544cCBAweOxVHzI82+8f6Q90+YPFt+Rhw4cODAcZYjKWPJX2cFOLmqfZ6k6OLAgQMHjk/gSB43CVH552cBEgcOHDhw/F+O9hj7mJffAQcOHDhw/BVH0oCbjZT27cW2fflLvVIcOHDgwLGoXPdF9/PfP7LfgQMHDhw4Fk232ZinLX5JhGufpzgdDhw4cOBYc+QFKV9QaNtzbUsxf9+eCwcOHDhwnOJIAtumlTZr0s3KfFvIDxwABw4cOHAEpXETyTaHSX63+0/m/wr88B4HDhw4cKw52qZbG4Fmawd5LNysVrx5fhw4cODAMeKYFbx9WMoLYcs9G3qt6j8OHDhw4Liom+1CwGyRLn+4tnXYfgYHDhw4cDzBkY+U8jZc/TsshlXtQsabv+LAgQMHjjXHbLSTD6jyluImQO7RceDAgQPHKY48qiWRKS97efxrVyhW7UscOHDgwHGII49qbVlt24ttpGxHU2+uwoEDBw4chziea64lpbEdYh1YVkgiHA4cOHDgGHHkZawIQiVT2yJMouN+6IUDBw4cODYceXDKY9tr/cobgrPlhsurcODAgQPHgqMdNW2GOqeuypuD9ZAMBw4cOHCsOfahaNNYbFcT2oA3W33AgQMHDhx7jnyVYRaxNiEtOer9Z/L1CBw4cODAsec4PK1azG6SeNaGwLz848CBAweO5zjOlsN9qJsV1OHCBA4cOHDgOMrRHixpzOXtvHa8lHw+X3r4odDiwIEDB441RxKQ8ijVxqr8ALNxV3Q3HDhw4MCx5mgfqC1sM758iWF2VRRfceDAgQPHiGNWrmbjn7zZN1tHmA2oiuYgDhw4cOCIp0U5yqxYtgWyHS/NouClAA4cOHDgOMSRLwHkTbq89M7aiEm5zUdlOHDgwIHjFEc7qsnjXB7SZisRw5AW/3uBAwcOHDhajlko2hwmn4Pl6xEt2eXPhgMHDhw4HuZIymfeQMybjDPcPCJefhcOHDhw4DjEcaq1NyvSyTPMGnx1sMSBAwcOHGuOWTuvjVizPbTZSGy2nIEDBw4cOE5xfJWvtmS2oO3CRL5yUczccODAgQPHdvcseuVNvbysbgZFm7FW2/TEgQMHDhyn5vjDhbPRmGrW8suf4cDCHA4cOHDgKDnaQpWQzRqIpwr58P44cODAgePXOdrlg6S9uBlQbZqbxWQMBw4cOHA8xpHfelZ680berGy/OQUOHDhw4DjEkS+ltYsIm5HSfmSVL2TgwIEDB45THHmhaovfbH1tFgXzUdamYOPAgQMHjtv7fAPqY/eqmHwOoQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '又见面啦！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

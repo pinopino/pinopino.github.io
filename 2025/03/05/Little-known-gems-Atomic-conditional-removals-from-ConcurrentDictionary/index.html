@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Little-known gems:Atomic conditional removals from ConcurrentDictionary | 写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content=".NET">
+    <meta name="description" content="ConcurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be ac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Little-known gems:Atomic conditional removals from ConcurrentDictionary">
+<meta property="og:url" content="https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/index.html">
+<meta property="og:site_name" content="写代码的大雄">
+<meta property="og:description" content="ConcurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be ac">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-05T11:08:32.342Z">
+<meta property="article:modified_time" content="2025-03-05T11:13:35.629Z">
+<meta property="article:author" content="写代码的大雄">
+<meta property="article:tag" content=".NET">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="写代码的大雄" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">写代码的大雄</h5>
+          <a href="mailto:myhinata@126.com" title="myhinata@126.com" class="mail">myhinata@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/pinopino" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Little-known gems:Atomic conditional removals from ConcurrentDictionary</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Little-known gems:Atomic conditional removals from ConcurrentDictionary</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2025-03-05T11:08:32.342Z" itemprop="datePublished" class="page-time">
+  2025-03-05
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Little-known gems:Atomic conditional removals from ConcurrentDictionary</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2025-03-05 19:08:32" datetime="2025-03-05T11:08:32.342Z"  itemprop="datePublished">2025-03-05</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>ConcurrentDictionary&lt;TKey,TValue&gt;, first introduced in .NET 4, is an efficient dictionary data structure that enables thread-safe reading and writing, meaning that multiple threads may all be accessing the dictionary at the same time without corrupting it. It supports adding through its TryAdd method, conditional updates through its TryUpdate method, non-conditional adds or updates through its indexer’s setter, and removals through its TryRemove method, through which a key&#x2F;value pair is removed if the user-provided key matches.  It also has several compound methods, such as GetOrAdd and AddOrUpdate. Lately, however, we’ve seen several folks ask for further support on ConcurrentDictionary, that of removing a key&#x2F;value pair only if both the user-provided key and value match the corresponding pair currently stored in the dictionary. </p>
+<p>You want it, you got it! I mean, literally, you already have it. As with Dictionary&lt;TKey,TValue&gt;, ConcurrentDictionary&lt;TKey,TValue&gt; implements ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt;. ICollection<T> exposes a Remove<T> method, so ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt; has a Remove(KeyValuePair&lt;TKey,TValue&gt;) method. Dictionary&lt;TKey,TValue&gt; implements Remove such that it only removes the element if both the key and the value match the data in the dictionary, and thus ConcurrentDictionary&lt;TKey,TValue&gt; does the same.  And as it’s a concurrent data structure, ConcurrentDictionary&lt;TKey,TValue&gt; ensures that the comparison is done atomically with the removal. Tada!</p>
+<p>Of course, just as with Dictionary&lt;TKey,TValue&gt;, ConcurrentDictionary&lt;TKey,TValue&gt; implements ICollection&lt;KeyValuePair&lt;TKey,TValue&gt;&gt; explicitly, so if you want access to this method, you’ll need to first cast the dictionary to the interface. Here’s an extension method to help you with that cause:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">bool</span> <span class="title">TryRemove</span>&lt;<span class="title">TKey</span>, <span class="title">TValue</span>&gt;(<span class="params"><span class="keyword">this</span> ConcurrentDictionary&lt;TKey, TValue&gt; dictionary, TKey key, TValue <span class="keyword">value</span></span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (dictionary == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentNullException(“dictionary”);</span><br><span class="line">    <span class="keyword">return</span> ((ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;)dictionary).Remove(</span><br><span class="line">        <span class="keyword">new</span> KeyValuePair&lt;TKey, TValue&gt;(key, <span class="keyword">value</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Enjoy!</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2025-03-05T11:13:35.629Z" itemprop="dateUpdated">2025-03-05 19:13:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://pinopino.github.io">
+            <img src="/img/avatar.jpg" alt="写代码的大雄">
+            写代码的大雄
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/" rel="tag">.NET</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&via=https://pinopino.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2025/03/05/Asynchronous-Programming-Async%20Performance-Understanding-the-Costs-of-Async/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Asynchronous Programming - Async Performance:Understanding the Costs of Async and Await</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2025/03/05/await-anything/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">await anything</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢老板~~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>写代码的大雄 &copy; 2025</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&title=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Little-known gems:Atomic conditional removals from ConcurrentDictionary》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/&via=https://pinopino.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/Little-known-gems-Atomic-conditional-removals-from-ConcurrentDictionary/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD5UlEQVR42u3aSW7jQBAEQP3/0/LVgC0qs6rpBQidBrJMNkMDpGt5POLX89Pr+v3n5evzZ159/vr9r3e/PsnjjhcOHDhw4IgfdXa42bHy9/Ozbb4kHDhw4MBxliOJsevj5ldov4w88g98JThw4MCB45c4kqKuLaLyL2AW/zhw4MCB479wbMq/PEo3j4oDBw4cOH6eYzYoSn6aN+zyz+el4I29Uhw4cODAMamqiuLqL//7lv0OHDhw4MBRjnw2CwSz8EuC9tSzfHN3HDhw4MCx5sgDKR/wJFG9z7u8ZVk3InHgwIEDx4JjFUiLkm+/rLBfrai7pDhw4MCBo0zDfIFgvzRw/U7y8Pe1OHHgwIEDx54jj6hNmXS27pytNUTrFzhw4MCB4xBHfqH2kdqgTWJ1P156eX0cOHDgwLHmmIVi/s4mAvfDsGRkhQMHDhw4znJsbrwJ6baFd2qI9UYABw4cOHCsOfLonYV03uw71Sis/76YTa5w4MCBA0fcttvEYb7ilp+hbfANm4Y4cODAgeNmjrYBl0fjrHhrFxfy6xSzLxw4cODAEfx0UzjlQ51Z2ZaHblvmvTwDDhw4cOA4OX8pAu/uMm+2vpC0C1f9URw4cODAcdt4aROcm/HVbKGhxcWBAwcOHBuOU8tt7QrdvrW3P//L/xc4cODAgWN0/c3CWRJ4s7WGtiE4u/43J8eBAwcOHGuOvHxqsVrEtgzLCVaFJQ4cOHDgGHHMJlT5QkN7/Txc8xWHYrSGAwcOHDgOcSQ33kfaLCZzsvZZ3vRKceDAgQPHmuNU3G4agm3oJkVjsUiHAwcOHDjWHO0Dzwqt/Mr5WGv2wJvyEgcOHDhwtByzlbj2NrN43qAMwxUHDhw4cJQceXxuAjUv0jYhnYzB3kQyDhw4cOBYc8yag5vyaR/YbXlW3wUHDhw4cKw52tBNHnI/Ikqahu1qRVHX4sCBAweO2ziuf2024Dm13LZZX4gGTjhw4MCBo+S4Dtc2bmdFYB60yW/l9HWvFAcOHDhwlByn1tFmRdTsDAl6EcY4cODAgeMQR3u55Gb5olv++fyPg7YViAMHDhw4TnHklzu10PaIX/kC3NkYxoEDBw4cG45n+WqjdB/A+Z8Cs1MV3wAOHDhw4OhyrY6l2ZgnWX3IB2D5cOtUPOPAgQMHjoRjVixthkl5TLZfzD7+ceDAgQPHKY5TQTgbYh17mEXzEQcOHDhw/BZHftC8iJo9atvEjO6OAwcOHDh+nKN9jLx1mK8stC3CoijFgQMHDhyHONqDnnr4vCCcLUDUC3Y4cODAgWPNkbfSWpp2EFUUWvFnZvQ4cODAgWPE8QFYBjQ2ZDgPIgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '又见面啦！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

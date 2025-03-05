@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Await, and UI, and deadlocks! Oh my! | 写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content=".NET,珠玑,异步">
+    <meta name="description" content="It’s been awesome seeing the level of interest developers have had for the Async CTP and how much usage it’s getting.  Of course, with any new technology there are bound to be some hiccups.  One issue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Await, and UI, and deadlocks! Oh my!">
+<meta property="og:url" content="https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/index.html">
+<meta property="og:site_name" content="写代码的大雄">
+<meta property="og:description" content="It’s been awesome seeing the level of interest developers have had for the Async CTP and how much usage it’s getting.  Of course, with any new technology there are bound to be some hiccups.  One issue">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-05T03:37:09.375Z">
+<meta property="article:modified_time" content="2025-03-05T11:14:17.407Z">
+<meta property="article:author" content="写代码的大雄">
+<meta property="article:tag" content=".NET">
+<meta property="article:tag" content="珠玑">
+<meta property="article:tag" content="异步">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="写代码的大雄" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">写代码的大雄</h5>
+          <a href="mailto:myhinata@126.com" title="myhinata@126.com" class="mail">myhinata@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/pinopino" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Await, and UI, and deadlocks! Oh my!</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Await, and UI, and deadlocks! Oh my!</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2025-03-05T03:37:09.375Z" itemprop="datePublished" class="page-time">
+  2025-03-05
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-Await-and-UI-and-deadlocks-Oh-my"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Await, and UI, and deadlocks! Oh my!</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2025-03-05 11:37:09" datetime="2025-03-05T03:37:09.375Z"  itemprop="datePublished">2025-03-05</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>It’s been awesome seeing the level of interest developers have had for the <a target="_blank" rel="noopener" href="https://msdn.com/vstudio/async">Async CTP</a> and how much usage it’s getting.  Of course, with any new technology there are bound to be some hiccups.  One issue I’ve seen arise now multiple times is developers accidentally deadlocking their application by blocking their UI thread, so I thought it would be worthwhile to take a few moments to explore the common cause of this and how to avoid such predicaments.</p>
+<p>At its core, the new async language functionality aims to restore the ability for developers to write the sequential, imperative code they’re used to writing, but to have it be asynchronous in nature rather than synchronous.  That means that when operations would otherwise tie up the current thread of execution, they’re instead offloaded elsewhere, allowing the current thread to make forward progress and do other useful work while, in effect, asynchronously waiting for the spawned operation to complete.  In both server and client applications, this can be crucial for application scalability, and in client applications in particular it’s also really useful for responsiveness.</p>
+<p>Most UI frameworks, such as Windows Forms and WPF, utilize a message loop to receive and process incoming messages.  These messages include things like notifications of keys being typed on a keyboard, or buttons being clicked on a mouse, or controls in the user interface being manipulated, or the need to refresh an area of the window, or even the application sending itself a message dictating some code to be executed.  In response to these messages, the UI performs some action, such as redrawing its surface, or changing the text being displayed, or adding items to one of its controls., or running the code that was posted to it.  The “message loop” is typically literally a loop in code, where a thread continually waits for the next message to arrive, processes it, goes back to get the next message, processes it, and so on.  As long as that thread is able to quickly process messages as soon as they arrive, the application remains responsive, and the application’s users remain happy.  If, however, processing a particular message takes too long, the thread running the message loop code will be unable to pick up the next message in a timely fashion, and responsiveness will decrease.  This could take the form of pauses in responding to user input, and if the thread’s delays get bad enough (e.g. an infinite delay), the application “hanging”.</p>
+<p>In a framework like Windows Forms or WPF, when a user clicks a button, that typically ends up sending a message to the message loop, which translates the message into a call to a handler of some kind, such as a method on the class representing the user interface, e.g.:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> s = LoadString();</span><br><span class="line">    textBox1.Text = s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Here, when I click the button1 control, the message will inform WPF to invoke the button1_Click method, which will in turn run a method LoadString to get a string value, and store that string value into the textBox1 control’s Text property.  As long as LoadString is quick to execute, all is well, but the longer LoadString takes, the more time the UI thread is delayed inside button1_Click, unable to return to the message loop to pick up and process the next message.</p>
+<p>To address that, we can choose to load the string asynchronously, meaning that rather than blocking the thread calling button1_Click from returning to the message loop until the string loading has completed, we’ll instead just have that thread launch the loading operation and then go back to the message loop.  Only when the loading operation completes will we then send another message to the message loop to say “hey, that loading operation you previously started is done, and you can pick up where you left off and continue executing.”  Imagine we had a method:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Task&lt;<span class="built_in">string</span>&gt; <span class="title">LoadStringAsync</span>()</span>;</span><br></pre></td></tr></table></figure>
+
+<p>This method will return very quickly to its caller, handing back a .NET Task<string> object that represents the future completion of the asynchronous operation and its future result.  At some point in the future when the operation completes, the task object will be able to hand out the operations’ result, which could be the string in the case of successful loading, or an exception in the case of failure.  Either way, the task object provides several mechanisms to notify the holder of the object that the loading operation has completed.  One way is to synchronously block waiting for the task to complete, and that can be accomplished by calling the task’s Wait method, or by accessing its Result, which will implicitly wait until the operation has completed… in both of these cases, a call to these members will not complete until the operation has completed.  An alternative way is to receive an asynchronous callback, where you register with the task a delegate that will be invoked when the task completes.  That can be accomplished using one of the Task’s ContinueWith methods.  With ContinueWith, we can now rewrite our previous button1_Click method to not block the UI thread while we’re asynchronously waiting for the loading operation to complete:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Task&lt;<span class="built_in">string</span>&gt; s = LoadStringAsync();</span><br><span class="line">    s.ContinueWith(<span class="built_in">delegate</span> &#123; textBox1.Text = s.Result; &#125;); <span class="comment">// warning: buggy</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This does in fact asynchronously launch the loading operation, and then asynchronously run the code to store the result into the UI when the operation completes.  However, we now have a new problem.  UI frameworks like Windows Forms, WPF, and Silverlight all place a restriction on which threads are able to access UI controls, namely that the control can only be accessed from the thread that created it.  Here, however, we’re running the callback to update the Text of textBox1on some arbitrary thread, wherever the Task Parallel Library (TPL) implementation of ContinueWith happened to put it.  To address this, we need some way to get back to the UI thread.  Different UI frameworks provide different mechanisms for doing this, but in .NET they all take basically the same shape, a BeginInvoke method you can use to pass some code as a message to the UI thread to be processed:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Task&lt;<span class="built_in">string</span>&gt; s = LoadStringAsync();</span><br><span class="line">    s.ContinueWith(<span class="built_in">delegate</span></span><br><span class="line">    &#123;</span><br><span class="line">        Dispatcher.BeginInvoke(<span class="keyword">new</span> Action(<span class="built_in">delegate</span></span><br><span class="line">        &#123;</span><br><span class="line">            textBox1.Text = s.Result;</span><br><span class="line">        &#125;));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The .NET Framework further abstracts over these mechanisms for getting back to the UI thread, and in general a mechanism for posting some code to a particular context, through the SynchronizationContext class.  A framework can establish a current context, available through the SynchronizationContext.Current property, which provides a SynchronizationContext instance representing the current environment.  This instance’s Post method will marshal a delegate back to this environment to be invoked: in a WPF app, that means bringing you back to the dispatcher, or UI thread, you were previously on.  So, we can rewrite the previous code as follows:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> sc = SynchronizationContext.Current;</span><br><span class="line">    Task&lt;<span class="built_in">string</span>&gt; s = LoadStringAsync();</span><br><span class="line">    s.ContinueWith(<span class="built_in">delegate</span></span><br><span class="line">    &#123;</span><br><span class="line">        sc.Post(<span class="built_in">delegate</span> &#123; textBox1.Text = s.Result; &#125;, <span class="literal">null</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>and in fact this pattern is so common, TPL in .NET 4 provides the TaskScheduler.FromCurrentSynchronizationContext() method, which allows you to do the same thing with code like:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    LoadStringAsync().ContinueWith(s =&gt; textBox1.Text = s.Result,</span><br><span class="line">        TaskScheduler.FromCurrentSynchronizationContext());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>As mentioned, this works by “posting” the delegate back to the UI thread to be executed.  That posting is a message like any other, and it requires the UI thread to go through its message loop, pick up the message, and process it (which will result in invoking the posted delegate).  In order for the delegate to be invoked then, the thread first needs to return to the message loop, which means it must leave the button1_Click method.</p>
+<p>Now, there’s still a fair amount of boilerplate code to write above, and it gets orders of magnitude worse when you start introducing more complicated flow control constructs, like conditionals and loops.  To address this, the new async language feature allows you to write this same code as:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> s = <span class="keyword">await</span> LoadStringAsync();</span><br><span class="line">    textBox1.Text = s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>For all intents and purposes, this is the same as the previous code shown, and you can see how much cleaner it is… in fact, it’s close to identical  in the code required to our original synchronous implementation.  But, of course, this one is asynchronous: after calling LoadStringAsync and getting back the Task<string> object, the remainder of the function is hooked up as a callback that will be posted to the current SynchronizationContext in order to continue execution on the right thread when the loading is complete.  The compiler is layering on some really helpful syntactic sugar here.</p>
+<p>Now things get interesting. Let’s imagine LoadStringAsync is implemented as follows:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="built_in">string</span>&gt; <span class="title">LoadStringAsync</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">string</span> firstName = <span class="keyword">await</span> GetFirstNameAsync();</span><br><span class="line">    <span class="built_in">string</span> lastName = <span class="keyword">await</span> GetLastNameAsync();</span><br><span class="line">    <span class="keyword">return</span> firstName + ” ” + lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>LoadStringAsync is implemented to first asynchronously retrieve a first name, then asynchronously retrieve a last name, and then return the concatenation of the two.  Notice that it’s using “await”, which, as pointed out previously, is similar to the aforementioned TPL code that uses a continuation to post back to the synchronization context that was current when the await was issued.  So, here’s the crucial point: for LoadStringAsync to complete (i.e. for it to have loaded all of its data and returned its concatenated string, completing the task it returned with that concatenated result), the delegates it posted to the UI thread must have completed.  If the UI thread is unable to get back to the message loop to process messages, it will be unable to pick up the posted delegates that resulted from the asynchronous operations in LoadStringAsync completing, which means the remainder of LoadStringAsync will not run, which means the Task<string> returned from LoadStringAsync will not complete.  It won’t complete until the relevant messages are processed by the message loop.</p>
+<p>With that in mind, consider this (faulty) reimplementation of button1_Click:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Task&lt;<span class="built_in">string</span>&gt; s = LoadStringAsync();</span><br><span class="line">    textBox1.Text = s.Result; <span class="comment">// warning: buggy</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>There’s an exceedingly good chance that this code will hang your application.  The Task<string>.Result property is strongly typed as a String, and thus it can’t return until it has the valid result string to hand back; in other words, it blocks until the result is available.  We’re inside of button1_Click then blocking for LoadStringAsync to complete, but LoadStringAsync’s implementation depends on being able to post code asynchronously back to the UI to be executed, and the task returned from LoadStringAsync won’t complete until it does. LoadStringAsync is waiting for button1_Click to complete, and button1_Click is waiting for LoadStringAsync to complete. Deadlock!</p>
+<p>This problem can be exemplified easily without using any of this complicated machinery, e.g.:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> mre = <span class="keyword">new</span> ManualResetEvent(<span class="literal">false</span>);</span><br><span class="line">    SynchronizationContext.Current.Post(_ =&gt; mre.Set(), <span class="literal">null</span>);</span><br><span class="line">    mre.WaitOne(); <span class="comment">// warning: buggy</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Here, we’re creating a ManualResetEvent, a synchronization primitive that allows us to synchronously wait (block) until the primitive is set.  After creating it, we post back to the UI thread to set the event, and then we wait for it to be set.  But we’re waiting on the very thread that would go back to the message loop to pick up the posted message to do the set operation. Deadlock.</p>
+<p>The moral of this (longer than intended) story is that you should not block the UI thread.  Contrary to Nike’s recommendations, just don’t do it.  The new async language functionality makes it easy to asynchronous wait for your work to complete. So, on your UI thread, instead of writing:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;<span class="built_in">string</span>&gt; s = LoadStringAsync();</span><br><span class="line">textBox1.Text = s.Result; <span class="comment">// BAD ON UI</span></span><br></pre></td></tr></table></figure>
+
+<p>you can write:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Task&lt;<span class="built_in">string</span>&gt; s = LoadStringAsync();</span><br><span class="line">textBox1.Text = <span class="keyword">await</span> s; <span class="comment">// GOOD ON UI</span></span><br></pre></td></tr></table></figure>
+
+<p>Or instead of writing:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Task t = DoWork();</span><br><span class="line">t.Wait(); <span class="comment">// BAD ON UI</span></span><br></pre></td></tr></table></figure>
+
+<p>you can write:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Task t = DoWork();</span><br><span class="line"><span class="keyword">await</span> t; <span class="comment">// GOOD ON UI</span></span><br></pre></td></tr></table></figure>
+
+<p>This isn’t to say you should never block. To the contrary, synchronously waiting for a task to complete can be a very effective mechanism, and can exhibit less overhead in many situations than the asynchronous counterpart. There are also some contexts where asynchronously waiting can be dangerous. For these reasons and others, Task and Task<TResult> support both approaches, so you can have your cake and eat it too. Just be cognizant of what you’re doing and when, and don’t block your UI thread.</p>
+<p>(One final note: the Async CTP includes the TaskEx.ConfigureAwait method.  You can use this method to suppress the default behavior of marshaling back to the original synchronization context. This could have been used, for example, in the LoadStringAsync method to prevent those awaits from needing to return to the UI thread. This would not only have prevented the deadlock, it would have also resulted in better performance, because we now no longer need to force execution back to the UI thread, when nothing in that method actually needed to run on the UI thread.)</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2025-03-05T11:14:17.407Z" itemprop="dateUpdated">2025-03-05 19:14:17</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://pinopino.github.io">
+            <img src="/img/avatar.jpg" alt="写代码的大雄">
+            写代码的大雄
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/" rel="tag">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag">异步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8F%A0%E7%8E%91/" rel="tag">珠玑</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/&title=《Await, and UI, and deadlocks! Oh my!》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/&title=《Await, and UI, and deadlocks! Oh my!》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Await, and UI, and deadlocks! Oh my!》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/&via=https://pinopino.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2025/03/05/await-anything/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">await anything</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢老板~~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>写代码的大雄 &copy; 2025</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/&title=《Await, and UI, and deadlocks! Oh my!》 — 写代码的大雄&pic=https://pinopino.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/&title=《Await, and UI, and deadlocks! Oh my!》 — 写代码的大雄&source=写代码的大雄 | 工资固然重要，但兴趣也同样重要啊！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Await, and UI, and deadlocks! Oh my!》 — 写代码的大雄&url=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/&via=https://pinopino.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://pinopino.github.io/2025/03/05/Await-and-UI-and-deadlocks-Oh-my/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3aQY7bMBAEwP3/pzeXHBJsbHfPkIYDlE6GZYksGSCp5nx9xcf3H0fy/aOzPz/Prj184OHh4S26/vPIf9O2mCCTq170Bw8PD+8aL7ld0vAM8LytfJLAw8PD+2Re2+nNWTw8PLz/nZew8wgjWSjnExUeHh7eO3ntrdtANgG3S+rDWQseHh7eydy1niRuf76yv4eHh4e33lV/PuDOtsrycoHNnX9fhYeHh3eBlw+4s1vPAoXkISa/x8PDw7vHy1/783KB9gHNIo/6weHh4eEd4s0G3HxxnHduVtoVTQZ4eHh4R3mbbacW1oYReYlD/R/i4eHhHeLlscKpEoF8Wjqwg4eHh4d3lNcGB8+7u/lluyivS6/w8PDwFrxkGd1uTeXdTYq62pi4fkvAw8PDK3lJ8+30sF8K54+s+Evw8PDwDvESUjJ8J/h8M2zTk7++wcPDw7vA2w/uSTN5mVQeJdcTFR4eHt4hXh49tJ3YFCXsg486WcHDw8M7ysvj131xwKyY4OG1eHh4eBd4m1sng/WqwDR+iC/+DDw8PLwLvHz5m0QJ+dl2UmmjCjw8PLz38DaD76ygKi9dXU0JeHh4eId4+yLRNpKYLbKHZ/Hw8PAu82bB7r50IG+xjjPw8PDwLvDaRWo+QM9i37a8ICrDwsPDw3sL72zMmgevm2DiwOyHh4eHV/LaAb1tuF2I51PFCyoeHh7eZV6yaE5ii3xYz1scHnh4eHhHed/lsY8Y8qmojX3/cRUeHh7eBd5mjE06tHkcwwX0qSkEDw8PL9hbz5tvg9pZkdZmYsDDw8N7Dy+PZTfVTflw305aDxfreHh4eB/Dm21l5dHwsQICPDw8vA/gbcKITWHBrEgLDw8P7x4vaaadDNohPilKqFvBw8PDu8BrX/hn0cCM0ZYUrPb38PDw8F7zfgHD9V6TOXu1XQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '又见面啦！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
